@@ -108,22 +108,20 @@
   transform: translateY(-7px) rotate(-45deg);
 }
 
-/* Menu mobile: painel em tela cheia abaixo da barra */
+/* ---------- Mobile: menu em tela cheia com accordions ---------- */
 .menu {
   position: fixed;
   inset: var(--nav-height) 0 0;
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  padding: 24px var(--gutter);
-  background: rgba(10, 10, 10, 0.97);
+  background: var(--color-bg);
   visibility: hidden;
   opacity: 0;
   transform: translateY(-8px);
   transition:
-    opacity 0.25s ease,
-    transform 0.25s var(--ease-out),
-    visibility 0s linear 0.25s;
+    opacity 0.2s ease,
+    transform 0.2s var(--ease-out),
+    visibility 0s linear 0.2s;
 }
 
 .menu.open {
@@ -133,30 +131,124 @@
   transition-delay: 0s;
 }
 
-.menu a {
-  display: block;
-  padding: 14px 0;
+.items {
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 8px 24px 24px;
+}
+
+.item {
   border-bottom: 1px solid var(--color-border);
+}
+
+.trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 16px 0;
   color: var(--color-white);
   font-family: var(--font-title);
   font-size: 2rem;
   letter-spacing: 0.03em;
+  text-align: left;
 }
 
-.menu a:hover {
+.chevron {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  color: var(--color-neon);
+  transition: transform 0.2s var(--ease-out);
+}
+
+.trigger[aria-expanded="true"] .chevron {
+  transform: rotate(180deg);
+}
+
+/* Accordion: anima a altura com grid-template-rows 0fr → 1fr */
+.panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition:
+    grid-template-rows 0.2s var(--ease-out),
+    visibility 0s linear 0.2s;
+}
+
+.panelOpen {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+.panelClip {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.panelInner {
+  padding: 0 0 20px;
+}
+
+.columns {
+  display: grid;
+  gap: 20px;
+}
+
+.columnTitle {
+  margin-bottom: 8px;
+  color: var(--color-neon);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.column ul {
+  display: grid;
+  gap: 2px;
+}
+
+.column a {
+  display: block;
+  padding: 6px 0;
+  color: #e6e6e6;
+  font-size: 1rem;
+  transition: color 0.2s ease;
+}
+
+.column a:hover {
   color: var(--color-neon);
 }
 
-@media (min-width: 900px) {
+.featured {
+  display: none;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding: 16px 24px calc(16px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--color-border);
+  background: var(--color-bg);
+}
+
+/* ---------- Desktop: barra + mega menu em largura total ---------- */
+@media (min-width: 1080px) {
   .toggle {
     display: none;
   }
 
   .menu {
     position: static;
+    flex: 1;
     flex-direction: row;
-    gap: 32px;
-    padding: 0;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 48px;
     background: none;
     visibility: visible;
     opacity: 1;
@@ -164,36 +256,152 @@
     transition: none;
   }
 
-  .menu a {
-    position: relative;
-    padding: 6px 0;
+  .items {
+    display: flex;
+    gap: 8px;
+    flex: none;
+    overflow: visible;
+    padding: 0;
+  }
+
+  .item {
     border: 0;
+  }
+
+  .trigger {
+    position: relative;
+    gap: 6px;
+    width: auto;
+    padding: 10px 12px;
+    border-radius: 8px;
     font-family: var(--font-body);
     font-size: 0.9rem;
     font-weight: 600;
     letter-spacing: 0.02em;
   }
 
-  .menu a::after {
+  .chevron {
+    width: 12px;
+    height: 12px;
+  }
+
+  .trigger::after {
     content: "";
     position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    left: 12px;
+    right: 12px;
+    bottom: 2px;
     height: 2px;
     background: var(--color-neon);
     box-shadow: var(--glow-neon);
     transform: scaleX(0);
     transform-origin: left;
-    transition: transform 0.3s var(--ease-out);
+    transition: transform 0.2s var(--ease-out);
   }
 
-  .menu a:hover {
-    color: var(--color-white);
-  }
-
-  .menu a:hover::after,
-  .menu a:focus-visible::after {
+  .trigger:hover::after,
+  .trigger[aria-expanded="true"]::after {
     transform: scaleX(1);
+  }
+
+  /* Painel em largura total logo abaixo da barra */
+  .panel {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    display: block;
+    background: var(--color-bg);
+    border-bottom: 1px solid rgba(225, 6, 0, 0.45);
+    box-shadow:
+      0 1px 0 rgba(255, 36, 36, 0.25),
+      0 18px 40px -18px rgba(255, 36, 36, 0.35);
+    opacity: 0;
+    transform: translateY(-6px);
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s var(--ease-out),
+      visibility 0s linear 0.2s;
+  }
+
+  .panelOpen {
+    opacity: 1;
+    transform: none;
+    transition-delay: 0s;
+  }
+
+  .panelClip {
+    overflow: visible;
+  }
+
+  .panelInner {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 48px;
+    padding: 40px 24px 44px;
+  }
+
+  .columns {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 32px;
+    align-content: start;
+  }
+
+  .column a {
+    font-size: 0.95rem;
+  }
+
+  .featured {
+    display: grid;
+    gap: 6px;
+    padding: 24px;
+    border: 1px solid var(--color-border-red);
+    border-radius: var(--radius);
+    background:
+      radial-gradient(120% 120% at 100% 0%, rgba(225, 6, 0, 0.18), transparent 60%),
+      var(--color-surface);
+  }
+
+  .featuredEyebrow {
+    color: var(--color-neon);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .featuredComp {
+    font-size: 0.8rem;
+  }
+
+  .featuredTeams {
+    color: var(--color-white);
+    font-family: var(--font-title);
+    font-size: 2rem;
+    line-height: 1.05;
+  }
+
+  .featuredTeams span {
+    color: var(--color-neon);
+  }
+
+  .featuredMeta {
+    margin-bottom: 12px;
+    font-size: 0.85rem;
+    color: #d6d6d6;
+  }
+
+  .actions {
+    display: flex;
+    gap: 10px;
+    padding: 0;
+    border: 0;
+    background: none;
+  }
+
+  .actions :global(.btn) {
+    min-height: 40px;
+    padding: 8px 18px;
+    font-size: 0.8rem;
   }
 }

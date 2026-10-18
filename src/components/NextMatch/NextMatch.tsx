@@ -1,18 +1,7 @@
 import SectionTitle from "@/components/SectionTitle/SectionTitle";
+import { MATCH, MATCH_DATE } from "@/data/match";
 import Countdown from "./Countdown";
 import styles from "./NextMatch.module.css";
-
-// Dados fictícios — jogo de exemplo
-export const MATCH_DATE = "2026-11-22T16:00:00-03:00";
-
-const MATCH = {
-  competition: "Campeonato Brasileiro · Rodada 35",
-  home: "Flamengo",
-  away: "Adversário",
-  date: "Domingo, 22 de novembro",
-  time: "16h00",
-  venue: "Maracanã · Rio de Janeiro",
-};
 
 export default function NextMatch() {
   return (

@@ -1,5 +1,6 @@
 import Hero from "@/components/Hero/Hero";
 import Navbar from "@/components/Navbar/Navbar";
+import NextMatch from "@/components/NextMatch/NextMatch";
 
 export default function Home() {
   return (
@@ -10,6 +11,7 @@ export default function Home() {
       <Navbar />
       <main id="conteudo">
         <Hero />
+        <NextMatch />
       </main>
     </>
   );

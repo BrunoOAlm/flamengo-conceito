@@ -1,0 +1,9 @@
+{
+  // Hospeda o export estático do Next (pasta out/) como assets de um Worker
+  "name": "flamengo-conceito",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./out",
+    "not_found_handling": "404-page"
+  }
+}

@@ -31,8 +31,8 @@ Abra [http://localhost:3000](http://localhost:3000).
 Outros scripts:
 
 ```bash
-npm run build   # build de produção
-npm run start   # serve o build
+npm run build   # export estático na pasta out/
+npm run deploy  # build + publica no Cloudflare (wrangler)
 npm run lint    # ESLint
 ```
 

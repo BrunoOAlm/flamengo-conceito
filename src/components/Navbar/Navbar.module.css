@@ -1,0 +1,194 @@
+.header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 50;
+  height: var(--nav-height);
+}
+
+/* Fundo com blur num pseudo-elemento: backdrop-filter no próprio header
+   viraria o bloco de contenção do menu mobile (position: fixed). */
+.header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgba(10, 10, 10, 0.78);
+  border-bottom: 1px solid var(--color-border);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.solid::before {
+  opacity: 1;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--color-white);
+  font-family: var(--font-title);
+  font-size: 1.6rem;
+  letter-spacing: 0.04em;
+}
+
+.brand img {
+  filter: drop-shadow(0 0 6px rgba(255, 36, 36, 0.7));
+}
+
+.brand small {
+  color: var(--color-neon);
+  font-size: 0.8em;
+}
+
+/* Botão hambúrguer */
+.toggle {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  position: relative;
+  z-index: 2;
+}
+
+.bars,
+.bars::before,
+.bars::after {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--color-white);
+  border-radius: 2px;
+  transition: transform 0.3s var(--ease-out), opacity 0.2s ease;
+}
+
+.bars {
+  position: relative;
+}
+
+.bars::before,
+.bars::after {
+  content: "";
+  position: absolute;
+  left: 0;
+}
+
+.bars::before {
+  top: -7px;
+}
+
+.bars::after {
+  top: 7px;
+}
+
+.toggle[aria-expanded="true"] .bars {
+  background: transparent;
+}
+
+.toggle[aria-expanded="true"] .bars::before {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.toggle[aria-expanded="true"] .bars::after {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Menu mobile: painel em tela cheia abaixo da barra */
+.menu {
+  position: fixed;
+  inset: var(--nav-height) 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 24px var(--gutter);
+  background: rgba(10, 10, 10, 0.97);
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s var(--ease-out),
+    visibility 0s linear 0.25s;
+}
+
+.menu.open {
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+  transition-delay: 0s;
+}
+
+.menu a {
+  display: block;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-white);
+  font-family: var(--font-title);
+  font-size: 2rem;
+  letter-spacing: 0.03em;
+}
+
+.menu a:hover {
+  color: var(--color-neon);
+}
+
+@media (min-width: 900px) {
+  .toggle {
+    display: none;
+  }
+
+  .menu {
+    position: static;
+    flex-direction: row;
+    gap: 32px;
+    padding: 0;
+    background: none;
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .menu a {
+    position: relative;
+    padding: 6px 0;
+    border: 0;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .menu a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background: var(--color-neon);
+    box-shadow: var(--glow-neon);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s var(--ease-out);
+  }
+
+  .menu a:hover {
+    color: var(--color-white);
+  }
+
+  .menu a:hover::after,
+  .menu a:focus-visible::after {
+    transform: scaleX(1);
+  }
+}

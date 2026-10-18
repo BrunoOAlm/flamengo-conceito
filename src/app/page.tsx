@@ -1,3 +1,4 @@
+import Hero from "@/components/Hero/Hero";
 import Navbar from "@/components/Navbar/Navbar";
 
 export default function Home() {
@@ -8,7 +9,7 @@ export default function Home() {
       </a>
       <Navbar />
       <main id="conteudo">
-        <div id="topo" style={{ height: "200svh" }} />
+        <Hero />
       </main>
     </>
   );

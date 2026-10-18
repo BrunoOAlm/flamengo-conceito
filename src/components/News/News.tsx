@@ -28,7 +28,7 @@ export default function News() {
           Manchetes fictícias criadas para demonstrar o layout.
         </SectionTitle>
 
-        <ul className={styles.grid}>
+        <ul className={styles.grid} data-reveal="stagger">
           {NEWS.map((item, i) => (
             <li key={item.title} className={`${styles.card} ${i === 0 ? styles.featured : ""}`}>
               <div className={`${styles.thumb} ${styles[`tone${i % 3}`]}`} role="img" aria-label={`Imagem ilustrativa: ${item.category}`} />

@@ -64,7 +64,7 @@ export default function Membership() {
           Escolha seu plano e fique mais perto do Mais Querido. Planos e valores meramente ilustrativos.
         </SectionTitle>
 
-        <ul className={styles.plans}>
+        <ul className={styles.plans} data-reveal="stagger">
           {PLANS.map((plan) => (
             <li key={plan.name} className={`${styles.plan} ${plan.featured ? styles.featured : ""}`}>
               {plan.featured && <p className={styles.badge}>Mais popular</p>}

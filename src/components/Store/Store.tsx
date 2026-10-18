@@ -17,7 +17,7 @@ export default function Store() {
           Uma vitrine ilustrativa — produtos, imagens e preços são apenas exemplos.
         </SectionTitle>
 
-        <ul className={styles.grid}>
+        <ul className={styles.grid} data-reveal="stagger">
           {PRODUCTS.map((product) => (
             <li key={product.name} className={styles.card}>
               <div className={styles.media}>

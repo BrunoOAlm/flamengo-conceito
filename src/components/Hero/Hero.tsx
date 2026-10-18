@@ -1,21 +1,11 @@
+import BackgroundVideo from "./BackgroundVideo";
 import styles from "./Hero.module.css";
 import SoundButton from "./SoundButton";
 
 export default function Hero() {
   return (
     <section id="topo" className={styles.hero} aria-labelledby="hero-titulo">
-      <video
-        className={styles.video}
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="auto"
-        poster="/hero.jpg"
-        aria-hidden="true"
-      >
-        <source src="/hero.mp4" type="video/mp4" />
-      </video>
+      <BackgroundVideo className={styles.video} />
       <div className={styles.vignette} aria-hidden="true" />
 
       <div className={styles.content}>

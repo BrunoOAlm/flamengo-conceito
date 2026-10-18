@@ -4,6 +4,7 @@ import Membership from "@/components/Membership/Membership";
 import Navbar from "@/components/Navbar/Navbar";
 import News from "@/components/News/News";
 import NextMatch from "@/components/NextMatch/NextMatch";
+import ScrollReveal from "@/components/ScrollReveal/ScrollReveal";
 import Store from "@/components/Store/Store";
 
 export default function Home() {
@@ -21,6 +22,7 @@ export default function Home() {
         <News />
       </main>
       <Footer />
+      <ScrollReveal />
     </>
   );
 }

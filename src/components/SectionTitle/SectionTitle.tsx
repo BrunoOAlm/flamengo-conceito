@@ -10,7 +10,7 @@ type Props = {
 /** Cabeçalho padrão das seções: sobretítulo com listra, título e texto opcional. */
 export default function SectionTitle({ id, eyebrow, title, children }: Props) {
   return (
-    <header className={styles.header}>
+    <header className={styles.header} data-reveal>
       <p className={styles.eyebrow}>{eyebrow}</p>
       <h2 id={id} className={styles.title}>
         {title}

@@ -20,7 +20,7 @@ export default function NextMatch() {
       <div className="container">
         <SectionTitle id="jogos-titulo" eyebrow="Agenda" title="Próximo jogo" />
 
-        <article className={styles.card}>
+        <article className={styles.card} data-reveal>
           <div className={styles.info}>
             <p className={styles.competition}>
               {MATCH.competition}

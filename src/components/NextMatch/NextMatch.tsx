@@ -41,7 +41,7 @@ export default function NextMatch() {
 
           <div className={styles.side}>
             <Countdown target={MATCH_DATE} />
-            <a id="ingressos" href="#" className={styles.cta}>
+            <a id="ingressos" href="#" className={`btn ${styles.cta}`}>
               Comprar ingresso
             </a>
           </div>

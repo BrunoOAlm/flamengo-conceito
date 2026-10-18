@@ -112,27 +112,8 @@
 }
 
 .cta {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
   min-height: 52px;
-  padding: 14px 28px;
-  border-radius: 999px;
-  background: var(--color-red);
-  color: var(--color-white);
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  transition:
-    background-color 0.25s ease,
-    box-shadow 0.25s ease,
-    transform 0.25s var(--ease-out);
-}
-
-.cta:hover {
-  background: var(--color-neon);
-  box-shadow: var(--glow-neon);
-  transform: translateY(-2px);
+  font-size: 1rem;
 }
 
 @media (min-width: 860px) {

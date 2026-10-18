@@ -1,0 +1,141 @@
+.section {
+  position: relative;
+  padding-block: clamp(64px, 10vw, 120px);
+  background:
+    radial-gradient(60% 50% at 50% 0%, rgba(225, 6, 0, 0.14), transparent 70%),
+    linear-gradient(to bottom, var(--color-bg), #0e0606 50%, var(--color-bg));
+  overflow: hidden;
+}
+
+/* Reservado para o vídeo do urubu (ver TODO no componente) */
+.mascot {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.section > :global(.container) {
+  position: relative;
+  z-index: 1;
+}
+
+.plans {
+  display: grid;
+  gap: 20px;
+  align-items: stretch;
+}
+
+.plan {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(24px, 3vw, 36px);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+}
+
+.featured {
+  border-color: var(--color-neon);
+  background:
+    radial-gradient(120% 80% at 50% 0%, rgba(255, 36, 36, 0.2), transparent 60%),
+    var(--color-surface);
+  box-shadow:
+    0 0 0 1px rgba(255, 36, 36, 0.4),
+    0 0 24px rgba(255, 36, 36, 0.35),
+    0 0 80px rgba(255, 36, 36, 0.18);
+}
+
+.badge {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 4px 14px;
+  border-radius: 999px;
+  background: var(--color-red);
+  color: var(--color-white);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  box-shadow: var(--glow-neon);
+}
+
+.name {
+  font-size: 2.4rem;
+}
+
+.featured .name {
+  color: var(--color-white);
+  text-shadow: var(--glow-neon);
+}
+
+.tagline {
+  margin-top: 4px;
+  font-size: 0.95rem;
+}
+
+.price {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-block: 24px;
+  color: var(--color-white);
+  font-family: var(--font-title);
+  font-size: 3.4rem;
+  line-height: 1;
+}
+
+.currency {
+  font-size: 1.4rem;
+  color: var(--color-neon);
+}
+
+.period {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--color-text);
+}
+
+.benefits {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 28px;
+  font-size: 0.95rem;
+}
+
+.benefits li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  color: #d6d6d6;
+}
+
+.benefits svg {
+  flex: none;
+  margin-top: 3px;
+  color: var(--color-neon);
+}
+
+.cta {
+  margin-top: auto;
+}
+
+.note {
+  margin-top: 24px;
+  font-size: 0.8rem;
+}
+
+@media (min-width: 900px) {
+  .plans {
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+  }
+
+  .featured {
+    padding-block: 48px;
+  }
+}

@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer/Footer";
 import Hero from "@/components/Hero/Hero";
 import Membership from "@/components/Membership/Membership";
 import Navbar from "@/components/Navbar/Navbar";
@@ -19,6 +20,7 @@ export default function Home() {
         <Store />
         <News />
       </main>
+      <Footer />
     </>
   );
 }

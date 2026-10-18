@@ -1,4 +1,5 @@
 import styles from "./Hero.module.css";
+import SoundButton from "./SoundButton";
 
 export default function Hero() {
   return (
@@ -33,6 +34,7 @@ export default function Hero() {
       </div>
 
       <p className={styles.tag}>Conceito · não oficial</p>
+      <SoundButton />
     </section>
   );
 }

@@ -1,0 +1,93 @@
+.section {
+  padding-block: clamp(64px, 10vw, 120px);
+}
+
+.grid {
+  display: grid;
+  gap: 20px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  overflow: hidden;
+  transition:
+    transform 0.35s var(--ease-out),
+    border-color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.card:hover,
+.card:focus-within {
+  transform: translateY(-6px);
+  border-color: var(--color-border-red);
+  box-shadow: 0 20px 50px -24px rgba(255, 36, 36, 0.55);
+}
+
+.media {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 3;
+  padding: 24px;
+  background:
+    radial-gradient(60% 60% at 50% 55%, rgba(225, 6, 0, 0.22), transparent 70%),
+    var(--color-surface-2);
+}
+
+.media svg {
+  width: min(70%, 220px);
+  height: auto;
+  transition: transform 0.35s var(--ease-out), filter 0.35s ease;
+}
+
+.card:hover .media svg {
+  transform: scale(1.04);
+  filter: drop-shadow(0 0 18px rgba(255, 36, 36, 0.45));
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  padding: 24px;
+}
+
+.name {
+  font-size: 1.8rem;
+}
+
+.description {
+  font-size: 0.95rem;
+}
+
+.price {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-block: 8px 18px;
+  color: var(--color-white);
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+
+.price span {
+  color: var(--color-text);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.body :global(.btn) {
+  margin-top: auto;
+}
+
+@media (min-width: 700px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

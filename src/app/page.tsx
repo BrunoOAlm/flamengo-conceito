@@ -2,6 +2,7 @@ import Hero from "@/components/Hero/Hero";
 import Membership from "@/components/Membership/Membership";
 import Navbar from "@/components/Navbar/Navbar";
 import NextMatch from "@/components/NextMatch/NextMatch";
+import Store from "@/components/Store/Store";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
         <Hero />
         <NextMatch />
         <Membership />
+        <Store />
       </main>
     </>
   );

@@ -27,8 +27,9 @@ export default function SoundButton() {
     const from = audio.volume;
     const start = performance.now();
     const step = (now: number) => {
-      const t = Math.min((now - start) / FADE_MS, 1);
-      audio.volume = from + (target - from) * t;
+      // O timestamp do rAF pode ser anterior ao performance.now() inicial: limita t a [0, 1]
+      const t = Math.min(Math.max((now - start) / FADE_MS, 0), 1);
+      audio.volume = Math.min(Math.max(from + (target - from) * t, 0), 1);
       if (t < 1) frameRef.current = requestAnimationFrame(step);
       else onDone?.();
     };

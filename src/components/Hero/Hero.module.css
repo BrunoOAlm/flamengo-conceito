@@ -41,22 +41,42 @@
   width: 100%;
 }
 
+/* Duas camadas de máscara, intersectadas:
+   1) "varredura": degradê suave que desliza da ponta externa até o escudo (animada);
+   2) ponta externa levemente esmaecida (fixa). */
 .stripe {
   flex: 1;
   height: clamp(28px, 4vw, 56px);
   background: var(--stripes);
-  transform: scaleX(0);
-  animation: stripe-in 1s var(--ease-out) 0.3s both;
+  mask-size: 300% 100%, 100% 100%;
+  mask-repeat: no-repeat;
+  mask-composite: intersect;
+  -webkit-mask-composite: source-in;
 }
 
 .left {
-  transform-origin: left;
-  mask-image: linear-gradient(to right, transparent, #000 70%);
+  mask-image: linear-gradient(to right, #000 60%, transparent 66%), linear-gradient(to right, transparent, #000 20%);
+  mask-position: 0% 0, 0 0;
+  animation: sweep-left 3.5s cubic-bezier(0.45, 0, 0.25, 1) 0.3s both;
 }
 
 .right {
-  transform-origin: right;
-  mask-image: linear-gradient(to left, transparent, #000 70%);
+  mask-image: linear-gradient(to left, #000 60%, transparent 66%), linear-gradient(to left, transparent, #000 20%);
+  mask-position: 100% 0, 0 0;
+  animation: sweep-right 3.5s cubic-bezier(0.45, 0, 0.25, 1) 0.3s both;
+}
+
+/* Hero saiu da tela: zera as faixas para a entrada tocar de novo ao voltar */
+.hero[data-replay="off"] .stripe {
+  animation: none;
+}
+
+.hero[data-replay="off"] .left {
+  mask-position: 100% 0, 0 0;
+}
+
+.hero[data-replay="off"] .right {
+  mask-position: 0% 0, 0 0;
 }
 
 /* O filter cria um grupo próprio; o blend vai no wrapper para o neon
@@ -95,12 +115,21 @@
   white-space: nowrap;
 }
 
-@keyframes stripe-in {
+@keyframes sweep-left {
   from {
-    transform: scaleX(0);
+    mask-position: 100% 0, 0 0;
   }
   to {
-    transform: scaleX(1);
+    mask-position: 0% 0, 0 0;
+  }
+}
+
+@keyframes sweep-right {
+  from {
+    mask-position: 0% 0, 0 0;
+  }
+  to {
+    mask-position: 100% 0, 0 0;
   }
 }
 
@@ -148,9 +177,19 @@
     display: none;
   }
 
-  .stripe {
+  .stripe,
+  .hero[data-replay="off"] .stripe {
     animation: none;
-    transform: none;
+  }
+
+  .left,
+  .hero[data-replay="off"] .left {
+    mask-position: 0% 0, 0 0;
+  }
+
+  .right,
+  .hero[data-replay="off"] .right {
+    mask-position: 100% 0, 0 0;
   }
 
   .crest img {

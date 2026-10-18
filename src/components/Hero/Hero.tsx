@@ -1,6 +1,7 @@
 import BackgroundVideo from "./BackgroundVideo";
 import styles from "./Hero.module.css";
 import SoundButton from "./SoundButton";
+import StripesReplay from "./StripesReplay";
 
 export default function Hero() {
   return (
@@ -25,6 +26,7 @@ export default function Hero() {
 
       <p className={styles.tag}>Conceito · não oficial</p>
       <SoundButton />
+      <StripesReplay targetId="topo" />
     </section>
   );
 }

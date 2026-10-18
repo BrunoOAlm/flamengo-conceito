@@ -39,7 +39,7 @@ export default function Navbar() {
       <nav className={`container ${styles.nav}`} aria-label="Principal">
         <a href="#topo" className={styles.brand} onClick={() => setOpen(false)}>
           {/* eslint-disable-next-line @next/next/no-img-element -- ícone decorativo pequeno */}
-          <img src="/escudo-neon.webp" alt="" width={28} height={32} />
+          <img src="/escudo-neon.webp" alt="" width={38} height={43} />
           <span>
             Flamengo <small>Conceito</small>
           </span>

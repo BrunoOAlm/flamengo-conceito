@@ -1,3 +1,4 @@
+import CrowdBanner from "@/components/CrowdBanner/CrowdBanner";
 import Footer from "@/components/Footer/Footer";
 import Hero from "@/components/Hero/Hero";
 import Membership from "@/components/Membership/Membership";
@@ -18,6 +19,7 @@ export default function Home() {
       <Navbar />
       <main id="conteudo">
         <Hero />
+        <CrowdBanner />
         <NextMatch />
         <StripeDivider />
         <Membership />

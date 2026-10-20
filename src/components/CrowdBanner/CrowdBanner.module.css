@@ -1,0 +1,89 @@
+.section {
+  position: relative;
+  display: grid;
+  padding-block: clamp(64px, 8vw, 96px);
+  overflow: hidden;
+}
+
+/* As duas faixas ocupam a mesma célula e se cruzam no meio */
+.band {
+  grid-area: 1 / 1;
+  position: relative;
+  width: 110%;
+  margin-left: -5%;
+  padding-block: 14px;
+  overflow: hidden;
+  font-family: var(--font-title);
+  font-size: clamp(28px, 4vw, 48px);
+  line-height: 1;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+/* Grade de pontinhos de LED por cima do texto */
+.band::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, transparent 0 1px, rgba(0, 0, 0, 0.28) 1.6px) 0 0 / 4px 4px;
+  pointer-events: none;
+}
+
+.red {
+  z-index: 1;
+  rotate: -2deg;
+  translate: 0 -22px;
+  background: var(--red);
+  color: #0a0a0a;
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.35);
+}
+
+.black {
+  z-index: 2;
+  rotate: 2deg;
+  translate: 0 22px;
+  background: #050505;
+  color: var(--red-neon);
+  border-block: 1px solid rgba(255, 26, 26, 0.35);
+  text-shadow: 0 0 8px rgba(255, 26, 26, 0.7), 0 0 22px rgba(255, 26, 26, 0.35);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  animation: marquee 40s linear infinite;
+}
+
+.reverse {
+  animation-direction: reverse;
+}
+
+.section:hover .track {
+  animation-play-state: paused;
+}
+
+.group {
+  display: flex;
+  flex: none;
+}
+
+.group > span {
+  padding-right: 0.5em;
+}
+
+.dot {
+  margin-left: 0.4em;
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    animation: none;
+  }
+}

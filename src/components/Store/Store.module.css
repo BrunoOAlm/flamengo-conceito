@@ -1,80 +1,142 @@
-.grid {
+.carousel {
+  position: relative;
+}
+
+/* Setas no canto superior direito, só em telas com mouse */
+.arrows {
+  display: none;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.arrow {
   display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  color: var(--text);
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    color 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.arrow:hover:not(:disabled) {
+  border-color: var(--red-neon);
+  box-shadow: var(--glow);
+  color: var(--red-neon);
+}
+
+.arrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: clamp(260px, 78vw, 320px);
   gap: 20px;
+  margin-inline: -24px;
+  padding: 8px 24px 28px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 24px;
+  scrollbar-width: none;
+  mask-image: linear-gradient(to right, transparent, #000 24px, #000 calc(100% - 48px), transparent);
+}
+
+.track::-webkit-scrollbar {
+  display: none;
 }
 
 .card {
+  --rx: 0deg;
+  --ry: 0deg;
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-  background: var(--color-surface);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--panel);
   overflow: hidden;
+  scroll-snap-align: start;
+  transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry));
   transition:
-    transform 0.35s var(--ease-out),
-    border-color 0.35s ease,
-    box-shadow 0.35s ease;
+    transform 0.25s ease-out,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .card:hover,
 .card:focus-within {
-  transform: translateY(-6px);
-  border-color: var(--color-border-red);
-  box-shadow: 0 20px 50px -24px rgba(255, 36, 36, 0.55);
+  border-color: rgba(255, 26, 26, 0.45);
+  box-shadow:
+    0 0 0 1px rgba(255, 26, 26, 0.15),
+    0 20px 60px -20px rgba(255, 0, 0, 0.55);
 }
 
+/* Spotlight vermelho atrás da camisa */
 .media {
   display: grid;
   place-items: center;
-  aspect-ratio: 4 / 3;
-  padding: 24px;
+  aspect-ratio: 1;
+  padding: 28px;
   background:
-    radial-gradient(60% 60% at 50% 55%, rgba(225, 6, 0, 0.22), transparent 70%),
-    var(--color-surface-2);
+    radial-gradient(55% 50% at 50% 55%, rgba(255, 26, 26, 0.35), transparent 70%),
+    radial-gradient(90% 60% at 50% 100%, rgba(225, 6, 0, 0.12), transparent 70%),
+    var(--panel-2);
 }
 
 .media svg {
-  width: min(70%, 220px);
+  width: 82%;
   height: auto;
-  transition: transform 0.35s var(--ease-out), filter 0.35s ease;
+  filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.6));
+  transition: filter 0.3s ease, scale 0.4s var(--ease-out);
 }
 
 .card:hover .media svg {
-  transform: scale(1.04);
-  filter: drop-shadow(0 0 18px rgba(255, 36, 36, 0.45));
+  scale: 1.04;
+  filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 22px rgba(255, 26, 26, 0.45));
 }
 
 .body {
   display: flex;
   flex-direction: column;
-  gap: 6px;
   flex: 1;
-  padding: 24px;
+  gap: 4px;
+  padding: 22px 22px 24px;
 }
 
 .name {
-  font-size: 1.8rem;
+  color: var(--text);
+  font-size: 1.9rem;
 }
 
 .description {
-  font-size: 0.95rem;
+  color: var(--muted);
+  font-size: 0.92rem;
 }
 
 .price {
   display: flex;
   align-items: baseline;
   gap: 8px;
-  margin-block: 8px 18px;
-  color: var(--color-white);
-  font-weight: 700;
-  font-size: 1.15rem;
+  margin-block: 10px 18px;
+  color: var(--text);
+  font-weight: 800;
+  font-size: 1.2rem;
 }
 
 .price span {
-  color: var(--color-text);
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
@@ -82,8 +144,20 @@
   margin-top: auto;
 }
 
-@media (min-width: 700px) {
-  .grid {
-    grid-template-columns: repeat(3, 1fr);
+@media (hover: hover) and (pointer: fine) and (min-width: 900px) {
+  .arrows {
+    display: flex;
+  }
+}
+
+@media (min-width: 900px) {
+  .track {
+    grid-auto-columns: calc((100% - 48px - 3 * 20px) / 3.4);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transform: none;
   }
 }

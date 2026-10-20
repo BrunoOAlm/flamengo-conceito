@@ -1,6 +1,5 @@
 .section {
   position: relative;
-  padding-block: clamp(64px, 10vw, 120px);
   background:
     radial-gradient(60% 50% at 50% 0%, rgba(225, 6, 0, 0.14), transparent 70%),
     linear-gradient(to bottom, var(--color-bg), #0e0606 50%, var(--color-bg));

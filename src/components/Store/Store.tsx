@@ -1,4 +1,5 @@
-import SectionTitle from "@/components/SectionTitle/SectionTitle";
+import Reveal from "@/components/ui/Reveal";
+import SectionHeader from "@/components/ui/SectionHeader";
 import Jersey, { type JerseyVariant } from "./Jersey";
 import styles from "./Store.module.css";
 
@@ -11,13 +12,11 @@ const PRODUCTS: { name: string; description: string; price: string; variant: Jer
 
 export default function Store() {
   return (
-    <section id="loja" className={styles.section} aria-labelledby="loja-titulo">
+    <section id="loja" className="section section-glow" aria-labelledby="loja-titulo">
       <div className="container">
-        <SectionTitle id="loja-titulo" eyebrow="Loja" title="Vista o manto">
-          Uma vitrine ilustrativa — produtos, imagens e preços são apenas exemplos.
-        </SectionTitle>
+        <SectionHeader id="loja-titulo" kicker="Loja" title="Vista o manto" subtitle="Uma vitrine ilustrativa — produtos, imagens e preços são apenas exemplos." />
 
-        <ul className={styles.grid} data-reveal="stagger">
+        <Reveal as="ul" stagger className={styles.grid}>
           {PRODUCTS.map((product) => (
             <li key={product.name} className={styles.card}>
               <div className={styles.media}>
@@ -35,7 +34,7 @@ export default function Store() {
               </div>
             </li>
           ))}
-        </ul>
+        </Reveal>
       </div>
     </section>
   );

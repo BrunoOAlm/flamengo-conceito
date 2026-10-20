@@ -1,4 +1,5 @@
-import SectionTitle from "@/components/SectionTitle/SectionTitle";
+import Reveal from "@/components/ui/Reveal";
+import SectionHeader from "@/components/ui/SectionHeader";
 import styles from "./News.module.css";
 
 type Item = { title: string; excerpt?: string; category: string; date: string; label: string };
@@ -22,13 +23,11 @@ const NEWS: Item[] = [
 
 export default function News() {
   return (
-    <section id="noticias" className={styles.section} aria-labelledby="noticias-titulo">
+    <section id="noticias" className="section section-glow" aria-labelledby="noticias-titulo">
       <div className="container">
-        <SectionTitle id="noticias-titulo" eyebrow="Notícias" title="Últimas da Nação">
-          Manchetes fictícias criadas para demonstrar o layout.
-        </SectionTitle>
+        <SectionHeader id="noticias-titulo" kicker="Notícias" title="Últimas da Nação" subtitle="Manchetes fictícias criadas para demonstrar o layout." />
 
-        <ul className={styles.grid} data-reveal="stagger">
+        <Reveal as="ul" stagger className={styles.grid}>
           {NEWS.map((item, i) => (
             <li key={item.title} className={`${styles.card} ${i === 0 ? styles.featured : ""}`}>
               <div className={`${styles.thumb} ${styles[`tone${i % 3}`]}`} role="img" aria-label={`Imagem ilustrativa: ${item.category}`} />
@@ -44,7 +43,7 @@ export default function News() {
               </div>
             </li>
           ))}
-        </ul>
+        </Reveal>
       </div>
     </section>
   );

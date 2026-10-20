@@ -1,5 +1,17 @@
 :root {
-  /* Paleta rubro-negra */
+  /* Tokens da repaginação (seções abaixo do hero) */
+  --bg: #0a0a0a;
+  --panel: #111;
+  --panel-2: #161616;
+  --line: rgba(255, 255, 255, 0.08);
+  --text: #f5f5f5;
+  --muted: #a3a3a3;
+  --red: #e10600;
+  --red-neon: #ff1a1a;
+  --glow: 0 0 12px rgba(255, 0, 0, 0.55), 0 0 40px rgba(255, 0, 0, 0.25);
+  --section-pad: clamp(72px, 10vw, 140px);
+
+  /* Paleta rubro-negra (original; usada também pelo hero) */
   --color-bg: #0a0a0a;
   --color-surface: #141414;
   --color-surface-2: #1c1c1c;
@@ -170,23 +182,25 @@ ul {
   transform: none;
 }
 
-/* Entrada ao rolar (ativada pelo componente ScrollReveal).
+/* Entrada ao rolar (componente <Reveal>): o JS só marca data-reveal="hidden" no que
+   está abaixo da dobra, então sem JS ou com movimento reduzido tudo aparece normal.
    Usa a propriedade `translate` para não brigar com o `transform` dos hovers. */
-.reveal-ready [data-reveal]:not([data-reveal="stagger"]):not(.is-visible),
-.reveal-ready [data-reveal="stagger"]:not(.is-visible) > * {
+[data-reveal="hidden"]:not([data-stagger]),
+[data-reveal="hidden"][data-stagger] > * {
   opacity: 0;
+  translate: 0 24px;
 }
 
-.reveal-ready [data-reveal]:not([data-reveal="stagger"]).is-visible,
-.reveal-ready [data-reveal="stagger"].is-visible > * {
-  animation: reveal-up 0.7s var(--ease-out) both;
-  animation-delay: calc(var(--i, 0) * 90ms);
+[data-reveal="shown"]:not([data-stagger]),
+[data-reveal="shown"][data-stagger] > * {
+  animation: reveal-up 0.8s var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 60ms);
 }
 
 @keyframes reveal-up {
   from {
     opacity: 0;
-    translate: 0 28px;
+    translate: 0 24px;
   }
   to {
     opacity: 1;
@@ -194,11 +208,46 @@ ul {
   }
 }
 
-[data-reveal="stagger"] > :nth-child(2) { --i: 1; }
-[data-reveal="stagger"] > :nth-child(3) { --i: 2; }
-[data-reveal="stagger"] > :nth-child(4) { --i: 3; }
-[data-reveal="stagger"] > :nth-child(5) { --i: 4; }
-[data-reveal="stagger"] > :nth-child(6) { --i: 5; }
+/* Seções abaixo do hero */
+.section {
+  position: relative;
+  padding-block: var(--section-pad);
+}
+
+/* Glow radial vermelho discreto no fundo (posição ajustável por seção) */
+.section-glow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(
+    var(--glow-size, 60% 50%) at var(--glow-x, 50%) var(--glow-y, 0%),
+    rgba(225, 6, 0, 0.13),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.section-glow {
+  isolation: isolate;
+}
+
+/* Ruído de filme sutil por trás de todo o conteúdo (o hero tem fundo próprio e o cobre) */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.04;
+  pointer-events: none;
+}
+
+.btn-sm {
+  min-height: 44px;
+  padding: 10px 20px;
+  font-size: 0.8rem;
+}
 
 @media (prefers-reduced-motion: reduce) {
   html {

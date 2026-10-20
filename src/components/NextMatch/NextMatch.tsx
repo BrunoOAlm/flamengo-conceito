@@ -1,15 +1,16 @@
-import SectionTitle from "@/components/SectionTitle/SectionTitle";
+import Reveal from "@/components/ui/Reveal";
+import SectionHeader from "@/components/ui/SectionHeader";
 import { MATCH, MATCH_DATE } from "@/data/match";
 import Countdown from "./Countdown";
 import styles from "./NextMatch.module.css";
 
 export default function NextMatch() {
   return (
-    <section id="jogos" className={styles.section} aria-labelledby="jogos-titulo">
+    <section id="jogos" className="section section-glow" aria-labelledby="jogos-titulo">
       <div className="container">
-        <SectionTitle id="jogos-titulo" eyebrow="Agenda" title="Próximo jogo" />
+        <SectionHeader id="jogos-titulo" kicker="Agenda" title="Próximo jogo" />
 
-        <article className={styles.card} data-reveal>
+        <Reveal as="article" className={styles.card}>
           <div className={styles.info}>
             <p className={styles.competition}>
               {MATCH.competition}
@@ -34,7 +35,7 @@ export default function NextMatch() {
               Comprar ingresso
             </a>
           </div>
-        </article>
+        </Reveal>
       </div>
     </section>
   );

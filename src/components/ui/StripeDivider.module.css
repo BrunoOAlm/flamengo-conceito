@@ -1,0 +1,7 @@
+.divider {
+  height: 8px;
+  background: var(--stripes);
+  /* Pontas esmaecidas, como as faixas do hero */
+  mask-image: linear-gradient(to right, transparent, #000 15%, #000 85%, transparent);
+  filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.35));
+}

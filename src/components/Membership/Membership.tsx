@@ -1,4 +1,5 @@
-import SectionTitle from "@/components/SectionTitle/SectionTitle";
+import Reveal from "@/components/ui/Reveal";
+import SectionHeader from "@/components/ui/SectionHeader";
 import styles from "./Membership.module.css";
 
 type Plan = {
@@ -53,18 +54,16 @@ function CheckIcon() {
 
 export default function Membership() {
   return (
-    <section id="socio" className={styles.section} aria-labelledby="socio-titulo">
+    <section id="socio" className={`section ${styles.section}`} aria-labelledby="socio-titulo">
       {/* TODO: vídeo futuro do urubu ao fundo da seção.
           Usar <video autoPlay muted loop playsInline> com mix-blend-mode: screen
           sobre o fundo escuro, posicionado em .mascot. */}
       <div className={styles.mascot} aria-hidden="true" />
 
       <div className="container">
-        <SectionTitle id="socio-titulo" eyebrow="Sócio-Torcedor" title="Nação Rubro-Negra">
-          Escolha seu plano e fique mais perto do Mais Querido. Planos e valores meramente ilustrativos.
-        </SectionTitle>
+        <SectionHeader id="socio-titulo" kicker="Sócio-Torcedor" title="Nação Rubro-Negra" subtitle="Escolha seu plano e fique mais perto do Mais Querido. Planos e valores meramente ilustrativos." />
 
-        <ul className={styles.plans} data-reveal="stagger">
+        <Reveal as="ul" stagger className={styles.plans}>
           {PLANS.map((plan) => (
             <li key={plan.name} className={`${styles.plan} ${plan.featured ? styles.featured : ""}`}>
               {plan.featured && <p className={styles.badge}>Mais popular</p>}
@@ -88,7 +87,7 @@ export default function Membership() {
               </a>
             </li>
           ))}
-        </ul>
+        </Reveal>
 
         <p className={styles.note}>* Valores de exemplo. Este conceito não realiza cadastros nem cobranças.</p>
       </div>

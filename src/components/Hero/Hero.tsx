@@ -1,4 +1,4 @@
-import BackgroundVideo from "./BackgroundVideo";
+import CanvasVideo from "@/components/CanvasVideo/CanvasVideo";
 import styles from "./Hero.module.css";
 import SoundButton from "./SoundButton";
 import StripesReplay from "./StripesReplay";
@@ -6,7 +6,7 @@ import StripesReplay from "./StripesReplay";
 export default function Hero() {
   return (
     <section id="topo" className={styles.hero} aria-labelledby="hero-titulo">
-      <BackgroundVideo className={styles.video} />
+      <CanvasVideo src="/hero.mp4" poster="/hero.jpg" loop autoPlay className={styles.video} />
       <div className={styles.vignette} aria-hidden="true" />
 
       <div className={styles.content}>

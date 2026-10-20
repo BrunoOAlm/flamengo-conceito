@@ -47,7 +47,7 @@ const COLUMNS = NAVIGATION.slice(0, 4).map((item) => ({
 
 export default function Footer() {
   return (
-    <footer className={styles.footer}>
+    <footer className={`below-fold ${styles.footer}`}>
       <div className={styles.stripes} aria-hidden="true" />
 
       <div className={`container ${styles.inner}`}>
@@ -88,7 +88,7 @@ export default function Footer() {
           ))}
         </nav>
 
-        <a href="#topo" className={styles.wordmark} aria-label="Voltar ao topo (Flamengo)">
+        <a href="#topo" className={styles.wordmark} aria-label="Flamengo: voltar ao topo">
           <span aria-hidden="true">Flamengo</span>
         </a>
 

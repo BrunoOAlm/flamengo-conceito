@@ -1,6 +1,8 @@
 .section {
   position: relative;
   display: grid;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 260px;
   padding-block: clamp(64px, 8vw, 96px);
   overflow: hidden;
 }

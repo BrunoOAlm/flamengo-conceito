@@ -7,7 +7,7 @@ import styles from "./NextMatch.module.css";
 
 export default function NextMatch() {
   return (
-    <section id="jogos" className="section section-glow" aria-labelledby="jogos-titulo">
+    <section id="jogos" className="section section-glow below-fold" aria-labelledby="jogos-titulo">
       <div className="container">
         <SectionHeader id="jogos-titulo" kicker="Agenda" title="Próximo jogo" />
 

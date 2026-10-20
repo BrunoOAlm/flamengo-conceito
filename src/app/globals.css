@@ -263,3 +263,9 @@ body::before {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Seções abaixo da dobra: o navegador pula o render até chegarem perto da tela */
+.below-fold {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 1100px;
+}

@@ -97,7 +97,7 @@ export default function News() {
   const items = NEWS.filter((item) => filter === "Todas" || item.category === filter).slice(0, MAX_ITEMS);
 
   return (
-    <section id="noticias" className="section section-glow" aria-labelledby="noticias-titulo">
+    <section id="noticias" className="section section-glow below-fold" aria-labelledby="noticias-titulo">
       <div className="container">
         <SectionHeader id="noticias-titulo" kicker="Notícias" title="Últimas da Nação" />
 

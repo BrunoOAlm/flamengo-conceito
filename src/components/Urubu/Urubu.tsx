@@ -26,9 +26,8 @@ export default function Urubu() {
     setEnded(true);
   }
 
+  // Texto e botão continuam na tela (o foco fica no botão); só o vídeo recomeça
   function replay() {
-    setEnded(false);
-    setRevealed(false);
     videoRef.current?.restart();
   }
 

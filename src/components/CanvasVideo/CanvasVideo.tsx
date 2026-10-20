@@ -86,12 +86,14 @@ export default function CanvasVideo({
   // Estado de reprodução compartilhado entre os observers
   const visibleRef = useRef(false);
   const endedRef = useRef(false);
+  // Só começa a tocar depois do load + ocioso: o carregamento inicial fica livre para o resto da página
+  const armedRef = useRef(false);
 
   const threshold = playWhenVisible ?? (autoPlay ? 0 : null);
 
   function sync() {
     const video = videoRef.current;
-    if (!video || threshold === null) return;
+    if (!video || threshold === null || !armedRef.current) return;
     const shouldPlay = visibleRef.current && !document.hidden && !endedRef.current;
     if (shouldPlay && video.paused) video.play().catch(() => {});
     else if (!shouldPlay && !video.paused) video.pause();
@@ -138,10 +140,25 @@ export default function CanvasVideo({
     const onVisibility = () => sync();
     document.addEventListener("visibilitychange", onVisibility);
 
+    let idleId = 0;
+    const arm = () => {
+      armedRef.current = true;
+      sync();
+    };
+    const armWhenIdle = () => {
+      if (typeof requestIdleCallback === "function") idleId = requestIdleCallback(arm, { timeout: 1500 });
+      else idleId = setTimeout(arm, 200) as unknown as number;
+    };
+    if (document.readyState === "complete") armWhenIdle();
+    else window.addEventListener("load", armWhenIdle, { once: true });
+
     return () => {
       preload.disconnect();
       play.disconnect();
       document.removeEventListener("visibilitychange", onVisibility);
+      window.removeEventListener("load", armWhenIdle);
+      if (typeof cancelIdleCallback === "function") cancelIdleCallback(idleId);
+      clearTimeout(idleId);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps -- sync só lê refs
   }, [mode, threshold]);
@@ -170,6 +187,9 @@ export default function CanvasVideo({
       const scale = Math.max(cw / vw, ch / vh);
       const dw = vw * scale;
       const dh = vh * scale;
+      // Mudar o tamanho do canvas zera o estado do contexto: reaplica a cada quadro
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = "high";
       ctx.drawImage(video, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
       if (!firstFrame) {
         firstFrame = true;
@@ -192,9 +212,17 @@ export default function CanvasVideo({
     };
 
     const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR);
-      const width = Math.max(1, Math.round(root.clientWidth * dpr));
-      const height = Math.max(1, Math.round(root.clientHeight * dpr));
+      const cssWidth = root.clientWidth;
+      const cssHeight = root.clientHeight;
+      let density = Math.min(window.devicePixelRatio || 1, MAX_DPR);
+      // O canvas nunca tem mais pixels que o vídeo cobrindo a área: assim o quadro é
+      // copiado 1:1 e quem amplia é o navegador, uma vez só (mesma nitidez do <video>)
+      if (video.videoWidth && video.videoHeight) {
+        const cover = Math.max(cssWidth / video.videoWidth, cssHeight / video.videoHeight);
+        density = Math.min(density, 1 / cover);
+      }
+      const width = Math.max(1, Math.round(cssWidth * density));
+      const height = Math.max(1, Math.round(cssHeight * density));
       if (canvas.width === width && canvas.height === height) return;
       canvas.width = width;
       canvas.height = height;
@@ -213,6 +241,7 @@ export default function CanvasVideo({
     };
 
     video.addEventListener("play", onPlay);
+    video.addEventListener("loadedmetadata", resize);
     video.addEventListener("loadeddata", draw);
     video.addEventListener("seeked", draw);
     video.addEventListener("ended", onEnd);
@@ -223,6 +252,7 @@ export default function CanvasVideo({
     return () => {
       resizeObserver.disconnect();
       video.removeEventListener("play", onPlay);
+      video.removeEventListener("loadedmetadata", resize);
       video.removeEventListener("loadeddata", draw);
       video.removeEventListener("seeked", draw);
       video.removeEventListener("ended", onEnd);
@@ -264,6 +294,7 @@ export default function CanvasVideo({
         alt={posterAlt}
         aria-hidden={posterAlt ? undefined : true}
         decoding="async"
+        loading={autoPlay ? "eager" : "lazy"}
       />
       {mode === "canvas" && <canvas ref={attachCanvas} className={styles.canvas} aria-hidden="true" />}
       {mode === "canvas" && load && <video ref={videoRef} className={styles.source} src={src} loop={loop} {...VIDEO_ATTRS} />}

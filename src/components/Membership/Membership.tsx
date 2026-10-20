@@ -95,7 +95,7 @@ function CheckIcon() {
 
 export default function Membership() {
   return (
-    <section id="socio" className={`section ${styles.section}`} aria-labelledby="socio-titulo">
+    <section id="socio" className={`section below-fold ${styles.section}`} aria-labelledby="socio-titulo">
       <div className="container">
         <SectionHeader
           id="socio-titulo"

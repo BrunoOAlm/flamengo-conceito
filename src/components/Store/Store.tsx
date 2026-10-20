@@ -13,7 +13,7 @@ const PRODUCTS: Product[] = [
 
 export default function Store() {
   return (
-    <section id="loja" className="section section-glow" aria-labelledby="loja-titulo">
+    <section id="loja" className="section section-glow below-fold" aria-labelledby="loja-titulo">
       <div className="container">
         <SectionHeader
           id="loja-titulo"

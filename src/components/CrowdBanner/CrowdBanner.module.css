@@ -66,16 +66,7 @@
 }
 
 .group {
-  display: flex;
   flex: none;
-}
-
-.group > span {
-  padding-right: 0.5em;
-}
-
-.dot {
-  margin-left: 0.4em;
 }
 
 @keyframes marquee {

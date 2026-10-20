@@ -4,17 +4,11 @@ const WORDS = ["MENGÃO", "RAÇA", "AMOR", "PAIXÃO", "NAÇÃO RUBRO-NEGRA"];
 // Repetições por metade da trilha: precisa cobrir telas largas antes de emendar
 const REPEAT = 3;
 
+// Um único nó de texto por metade da trilha (em vez de um <span> por palavra): DOM bem menor
+const TEXT = Array.from({ length: REPEAT }, () => WORDS.map((word) => `${word}  •  `).join("")).join("");
+
 function Track() {
-  const items = Array.from({ length: REPEAT }, () => WORDS).flat();
-  return (
-    <span className={styles.group}>
-      {items.map((word, i) => (
-        <span key={i}>
-          {word} <span className={styles.dot}>•</span>
-        </span>
-      ))}
-    </span>
-  );
+  return <span className={styles.group}>{TEXT}</span>;
 }
 
 /** Duas faixas cruzadas de placa de LED rolando em sentidos opostos. */

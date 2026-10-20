@@ -35,10 +35,12 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
       const max = track.scrollWidth - track.clientWidth;
       setEdges({ start: track.scrollLeft <= 4, end: track.scrollLeft >= max - 4 });
     };
-    update();
+    // 1ª leitura no próximo quadro, fora da hidratação (evita layout forçado)
+    const frame = requestAnimationFrame(update);
     track.addEventListener("scroll", update, { passive: true });
     window.addEventListener("resize", update);
     return () => {
+      cancelAnimationFrame(frame);
       track.removeEventListener("scroll", update);
       window.removeEventListener("resize", update);
     };

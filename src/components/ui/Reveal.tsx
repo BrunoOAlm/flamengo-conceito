@@ -12,8 +12,9 @@ type Props = {
 };
 
 /**
- * Fade + subida de 24px quando entra na tela. Só esconde o que está abaixo da dobra
- * no momento da montagem, e nada com prefers-reduced-motion.
+ * Fade + subida de 24px quando entra na tela. Só esconde o que está fora da tela na
+ * primeira leitura do IntersectionObserver (assíncrona: sem forçar layout na hidratação),
+ * e nada com prefers-reduced-motion.
  */
 export default function Reveal({ as: Tag = "div", stagger = false, className, children, id }: Props) {
   const ref = useRef<HTMLElement>(null);
@@ -21,13 +22,18 @@ export default function Reveal({ as: Tag = "div", stagger = false, className, ch
   useEffect(() => {
     const el = ref.current;
     if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    if (el.getBoundingClientRect().top < window.innerHeight) return;
 
-    if (stagger) Array.from(el.children).forEach((child, i) => (child as HTMLElement).style.setProperty("--i", String(i)));
-    el.dataset.reveal = "hidden";
-
+    let first = true;
     const observer = new IntersectionObserver(
       ([entry]) => {
+        if (first) {
+          first = false;
+          // Já está na tela: fica como está, sem animar
+          if (entry.isIntersecting) return observer.disconnect();
+          if (stagger) Array.from(el.children).forEach((child, i) => (child as HTMLElement).style.setProperty("--i", String(i)));
+          el.dataset.reveal = "hidden";
+          return;
+        }
         if (!entry.isIntersecting) return;
         el.dataset.reveal = "shown";
         observer.disconnect();

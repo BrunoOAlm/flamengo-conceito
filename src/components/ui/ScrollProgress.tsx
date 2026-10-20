@@ -17,7 +17,8 @@ export default function ScrollProgress() {
     const onScroll = () => {
       if (!frame) frame = requestAnimationFrame(update);
     };
-    update();
+    // 1ª leitura no próximo quadro, fora da hidratação (evita layout forçado)
+    frame = requestAnimationFrame(update);
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     return () => {
